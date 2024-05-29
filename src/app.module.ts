@@ -5,6 +5,7 @@ import { BusinessOfferModule } from './business_offer/business_offer.module';
 import { InvestorOfferModule } from './investor_offer/investor_offer.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Business } from './business/entities/business.entity';
 
 
 @Module({
@@ -20,7 +21,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       password: process.env.DB_PASSWORD,
       schema: process.env.DB_SCHEMA,
       entities: [
-        
+          Business
       ]
     }),
 

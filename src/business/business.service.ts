@@ -1,26 +1,67 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { CreateBusinessDto } from './dto/create-business.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
+import { Repository } from 'typeorm';
+import { Business } from './entities/business.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { PaginationDto } from 'src/common/pagination.dto';
+import { handleDBExceptions } from 'src/common/db-exception.util';
 
 @Injectable()
 export class BusinessService {
-  create(createBusinessDto: CreateBusinessDto) {
-    return 'This action adds a new business';
+
+  private readonly logger = new Logger('BusinessService');
+
+  constructor(
+    @InjectRepository(Business)
+    private readonly businessService: Repository<Business>
+  ){}
+
+  async create(createBusinessDto: CreateBusinessDto) {
+    
+    try {
+      const business = await this.businessService.create(createBusinessDto);
+      business.registrationDate = new Date();
+      business.state = "Active";
+      await this.businessService.save(business);
+      return business;   
+    } catch (error) {
+      handleDBExceptions(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all business`;
+  async findAll(paginationDto: PaginationDto) {
+    const { limit= 10, offset= 0 } = paginationDto;
+    const business = await this.businessService.find({
+      take: limit,
+      skip: offset
+    })
+    if (business.length <= 0) throw new NotFoundException('There are no records yet');
+    return business;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} business`;
+  async findOne(id: string) {
+    let business = await this.businessService.findBy({ id });
+    if ( business.length == 0) throw new NotFoundException(`Business with id: ${id} does not exist`);
+    return business;
   }
 
-  update(id: number, updateBusinessDto: UpdateBusinessDto) {
-    return `This action updates a #${id} business`;
+  async update(id: string, updateBusinessDto: UpdateBusinessDto) {
+    const business = await this.businessService.preload({id, ...updateBusinessDto})
+    if (!business) throw new NotFoundException(`Business with id: ${id} does not exist`);
+
+    try {
+      await this.businessService.save(business);
+    } catch (error) {
+      handleDBExceptions(error);
+    }
+    return business;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} business`;
+  async remove(id: string) {
+    const business = await this.findOne(id);
+    await this.businessService.remove(business);
+    return `Business with nit: ${id} has been eliminated.`;
   }
+
 }
