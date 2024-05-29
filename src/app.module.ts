@@ -6,6 +6,8 @@ import { InvestorOfferModule } from './investor_offer/investor_offer.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Business } from './business/entities/business.entity';
+import { CategoryResolver } from './category/category.resolver';
+import { CategoryModule } from './category/category.module';
 
 
 @Module({
@@ -28,8 +30,8 @@ import { Business } from './business/entities/business.entity';
     UserModule, 
     BusinessModule, 
     BusinessOfferModule, 
-    InvestorOfferModule],
+    InvestorOfferModule, CategoryModule],
   controllers: [],
-  providers: [],
+  providers: [CategoryResolver],
 })
 export class AppModule {}
