@@ -6,8 +6,8 @@ import { InvestorOfferModule } from './investor_offer/investor_offer.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Business } from './business/entities/business.entity';
-import { CategoryResolver } from './category/category.resolver';
 import { CategoryModule } from './category/category.module';
+import { Category } from './category/entities/category.entity';
 
 
 @Module({
@@ -23,7 +23,8 @@ import { CategoryModule } from './category/category.module';
       password: process.env.DB_PASSWORD,
       schema: process.env.DB_SCHEMA,
       entities: [
-          Business
+          Business,
+          Category
       ]
     }),
 
@@ -32,6 +33,6 @@ import { CategoryModule } from './category/category.module';
     BusinessOfferModule, 
     InvestorOfferModule, CategoryModule],
   controllers: [],
-  providers: [CategoryResolver],
+  providers: [],
 })
 export class AppModule {}
