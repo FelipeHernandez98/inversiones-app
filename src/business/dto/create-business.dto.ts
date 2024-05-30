@@ -9,7 +9,7 @@ export class CreateBusinessDto {
 
     @IsString()
     @MaxLength(15)
-    @IsOptional()
+    @IsDefined()
     country: string;
     
     @IsNumber()

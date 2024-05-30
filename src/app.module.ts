@@ -8,6 +8,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Business } from './business/entities/business.entity';
 import { CategoryModule } from './category/category.module';
 import { Category } from './category/entities/category.entity';
+import { EncryptionService } from './encryption/encryption.service';
+import { EncryptionModule } from './encryption/encryption.module';
+import { User } from './user/entities/user.entity';
 
 
 @Module({
@@ -24,15 +27,16 @@ import { Category } from './category/entities/category.entity';
       schema: process.env.DB_SCHEMA,
       entities: [
           Business,
-          Category
+          Category,
+          User
       ]
     }),
 
     UserModule, 
     BusinessModule, 
     BusinessOfferModule, 
-    InvestorOfferModule, CategoryModule],
+    InvestorOfferModule, CategoryModule, EncryptionModule],
   controllers: [],
-  providers: [],
+  providers: [EncryptionService],
 })
 export class AppModule {}

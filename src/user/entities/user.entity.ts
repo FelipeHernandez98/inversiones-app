@@ -46,5 +46,8 @@ import {
   
     @Column("smallint", { name: "id_role" })
     idRole: number;
+
+    @Column("character varying", { name: "phone_number" })
+    phoneNumber: string;
   }
   
