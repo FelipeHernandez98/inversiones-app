@@ -6,6 +6,7 @@ import { Business } from './entities/business.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationDto } from 'src/common/pagination.dto';
 import { handleDBExceptions } from 'src/common/db-exception.util';
+import { formatString } from 'src/common/string-format.util';
 
 @Injectable()
 export class BusinessService {
@@ -20,6 +21,7 @@ export class BusinessService {
   async create(createBusinessDto: CreateBusinessDto) {
     
     try {
+      createBusinessDto.name = formatString(createBusinessDto.name)
       const business = await this.businessService.create(createBusinessDto);
       business.registrationDate = new Date();
       business.state = "Active";
