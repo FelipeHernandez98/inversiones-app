@@ -1,14 +1,16 @@
 import {
     Column,
     Entity,
-    Index
+    Index,
+    PrimaryGeneratedColumn
   } from "typeorm";
   
   @Index("_email_unique", ["email"], { unique: true })
   @Index("business_pk", ["id"], { unique: true })
   @Entity("business", { schema: "inverschema" })
   export class Business {
-    @Column("uuid", { primary: true, name: "id" })
+
+    @PrimaryGeneratedColumn('uuid')
     id: string;
   
     @Column("character varying", { name: "nit", nullable: true, length: 15 })

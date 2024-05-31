@@ -37,7 +37,7 @@ export class CreateUserDto {
     state: string;
 
     @IsString()
-    @MaxLength(15)
+    @MaxLength(30)
     @IsOptional()
     linkedinUser: string;
 

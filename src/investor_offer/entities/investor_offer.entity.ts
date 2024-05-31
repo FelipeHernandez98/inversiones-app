@@ -1,9 +1,10 @@
-import { Column, Entity, Index } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
 @Index("investor_offer_pk", ["id"], { unique: true })
 @Entity("investor_offer", { schema: "inverschema" })
 export class InvestorOffer {
-  @Column("uuid", { primary: true, name: "id" })
+
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column("timestamp without time zone", { name: "meet_date" })
