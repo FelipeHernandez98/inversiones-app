@@ -7,22 +7,22 @@ export class CreateBusinessOfferDto {
     idBusiness: string;
 
     @IsString()
-    @MaxLength(10)
+    @MaxLength(250)
     @IsOptional()
     description: string;
 
     @IsString()
-    @MaxLength(10)
+    @MaxLength(100)
     @IsOptional()
     offer: string;
 
     @IsString()
-    @MaxLength(10)
+    @MaxLength(50)
     @IsOptional()
     value: string;
 
     @IsString()
-    @MaxLength(10)
+    @MaxLength(100)
     @IsDefined()
     offerVideoLink: string;
 

@@ -11,6 +11,7 @@ import { Category } from './category/entities/category.entity';
 import { EncryptionService } from './encryption/encryption.service';
 import { EncryptionModule } from './encryption/encryption.module';
 import { User } from './user/entities/user.entity';
+import { BusinessOffer } from './business_offer/entities/business_offer.entity';
 
 
 @Module({
@@ -28,7 +29,8 @@ import { User } from './user/entities/user.entity';
       entities: [
           Business,
           Category,
-          User
+          User,
+          BusinessOffer
       ]
     }),
 

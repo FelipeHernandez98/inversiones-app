@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { BusinessOfferService } from './business_offer.service';
 import { CreateBusinessOfferDto } from './dto/create-business_offer.dto';
 import { UpdateBusinessOfferDto } from './dto/update-business_offer.dto';
+import { PaginationDto } from 'src/common/pagination.dto';
 
 @Controller('business-offer')
 export class BusinessOfferController {
@@ -13,22 +14,22 @@ export class BusinessOfferController {
   }
 
   @Get()
-  findAll() {
-    return this.businessOfferService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.businessOfferService.findAll(paginationDto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.businessOfferService.findOne(+id);
+    return this.businessOfferService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBusinessOfferDto: UpdateBusinessOfferDto) {
-    return this.businessOfferService.update(+id, updateBusinessOfferDto);
+    return this.businessOfferService.update(id, updateBusinessOfferDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.businessOfferService.remove(+id);
+    return this.businessOfferService.remove(id);
   }
 }
