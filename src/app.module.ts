@@ -12,6 +12,7 @@ import { EncryptionService } from './encryption/encryption.service';
 import { EncryptionModule } from './encryption/encryption.module';
 import { User } from './user/entities/user.entity';
 import { BusinessOffer } from './business_offer/entities/business_offer.entity';
+import { InvestorOffer } from './investor_offer/entities/investor_offer.entity';
 
 
 @Module({
@@ -30,7 +31,8 @@ import { BusinessOffer } from './business_offer/entities/business_offer.entity';
           Business,
           Category,
           User,
-          BusinessOffer
+          BusinessOffer,
+          InvestorOffer
       ]
     }),
 

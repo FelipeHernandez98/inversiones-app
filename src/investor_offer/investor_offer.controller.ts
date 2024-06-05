@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { InvestorOfferService } from './investor_offer.service';
 import { CreateInvestorOfferDto } from './dto/create-investor_offer.dto';
 import { UpdateInvestorOfferDto } from './dto/update-investor_offer.dto';
+import { PaginationDto } from 'src/common/pagination.dto';
 
 @Controller('investor-offer')
 export class InvestorOfferController {
@@ -13,22 +14,22 @@ export class InvestorOfferController {
   }
 
   @Get()
-  findAll() {
-    return this.investorOfferService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.investorOfferService.findAll(paginationDto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.investorOfferService.findOne(+id);
+    return this.investorOfferService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateInvestorOfferDto: UpdateInvestorOfferDto) {
-    return this.investorOfferService.update(+id, updateInvestorOfferDto);
+    return this.investorOfferService.update(id, updateInvestorOfferDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.investorOfferService.remove(+id);
+    return this.investorOfferService.remove(id);
   }
 }
