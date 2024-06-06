@@ -12,8 +12,9 @@ export class CreateInvestorOfferDto {
     idInvestorUser: string;
 
     @Matches(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/, {
-        message: 'The date must be in YYYY-MM-DD HH:MM format.',
+        message: 'The meet date must be in YYYY-MM-DD HH:MM format.',
       }) 
+    @IsDefined()
     meetDate: string;
 
     @IsString()
@@ -32,7 +33,7 @@ export class CreateInvestorOfferDto {
     reply: string;
 
     @Matches(/^\d{4}-\d{2}-\d{2}$/, {
-        message: 'The date must be in YYYYY-MM-DD format.',
+        message: 'The end date must be in YYYYY-MM-DD format.',
     })
     @IsOptional()
     endDate: string;
