@@ -1,4 +1,4 @@
-import { IsDefined, IsEmail, IsNumber, IsOptional, IsPositive, IsString, Matches, Max, MaxLength, Min, MinLength } from "class-validator";
+import { IsDefined, IsEmail, IsIn, IsNumber, IsOptional, IsPositive, IsString, Matches, Max, MaxLength, Min, MinLength } from "class-validator";
 
 export class CreateUserDto {
 
@@ -36,8 +36,7 @@ export class CreateUserDto {
     password: string;
 
     @IsString()
-    @MaxLength(10)
-    @IsOptional()
+    @IsIn(["Active", "Inactive"], { message: "The State parameter can only be: Active - Inactive"})
     state: string;
 
     @IsString()

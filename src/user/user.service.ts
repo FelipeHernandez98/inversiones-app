@@ -21,10 +21,6 @@ export class UserService {
   ){}
 
   async create(createUserDto: CreateUserDto) {
-    const existingUser = await this.userService.findBy({email: createUserDto.email});
-        if (existingUser.length > 0) {
-            throw new ConflictException('A User with the same email already exists.');
-        }
     try {
       const user = await this.userService.create(createUserDto);
       const hashedPassword = await this.encryptionService.hashPassword(user.password);
@@ -32,7 +28,6 @@ export class UserService {
       user.name = formatString(user.name);
       user.lastname = formatString(user.lastname);
       user.registrationDate = new Date();
-      user.state = user.state === "" ? "Active" : user.state;
       user.isValid = false;
       await this.userService.save(user);
       delete user.password;
