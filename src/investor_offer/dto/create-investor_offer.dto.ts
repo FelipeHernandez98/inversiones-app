@@ -1,4 +1,4 @@
-import { IsDefined, IsOptional, IsString, IsUUID, Matches, MaxLength } from "class-validator";
+import { IsDefined, IsIn, IsOptional, IsString, IsUUID, Matches, MaxLength } from "class-validator";
 
 export class CreateInvestorOfferDto {
 
@@ -23,8 +23,7 @@ export class CreateInvestorOfferDto {
     videoConferenceLink: string;
 
     @IsString()
-    @MaxLength(10)
-    @IsOptional()
+    @IsIn(["Active", "Inactive", "Closed"], { message: "The State parameter can only be: Active - Inactive - Closed"})
     state: string;
 
     @IsString()
