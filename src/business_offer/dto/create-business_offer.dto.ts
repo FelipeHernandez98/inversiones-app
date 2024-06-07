@@ -1,4 +1,4 @@
-import { IsDefined, IsNumber, IsOptional, IsPositive, IsString, IsUUID, Matches, Max, MaxLength } from "class-validator";
+import { IsDefined, IsIn, IsNumber, IsOptional, IsPositive, IsString, IsUUID, Matches, Max, MaxLength } from "class-validator";
 
 export class CreateBusinessOfferDto {
     
@@ -27,8 +27,7 @@ export class CreateBusinessOfferDto {
     offerVideoLink: string;
 
     @IsString()
-    @MaxLength(10)
-    @IsOptional()
+    @IsIn(["Active", "Inactive", "Closed"], { message: "The State parameter can only be: Active - Inactive - Closed"})
     state: string;
 
     @Matches(/^\d{4}-\d{2}-\d{2}$/, {

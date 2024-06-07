@@ -1,9 +1,10 @@
-import { IsDefined, IsEmail, IsIn, IsNumber, IsOptional, IsPositive, IsString, IsUUID, Matches, Max, MaxLength } from "class-validator";
+import { IsDefined, IsEmail, IsIn, IsNumber, IsOptional, IsPositive, IsString, IsUUID, Matches, Max, MaxLength, MinLength } from "class-validator";
 
 export class CreateBusinessDto {
 
     @IsString()
     @MaxLength(15)
+    @MinLength(5)
     @IsOptional()
     nit: string;
 
@@ -24,13 +25,12 @@ export class CreateBusinessDto {
 
     @IsString()
     @MaxLength(250)
+    @MinLength(30)
     @IsDefined()
     description: string;
     
     @IsString()
-    @MaxLength(15)
-    @IsDefined()
-    @IsIn(["Idea", "Creada"])
+    @IsIn(["Idea", "Created"], { message: "The Type parameter can only be: Idea - Created"})
     type: string;
     
     @IsUUID()
@@ -79,9 +79,7 @@ export class CreateBusinessDto {
     linkedinUser: string;
   
     @IsString()
-    @MaxLength(10)
-    @IsOptional()
+    @IsIn(["Active", "Inactive"], { message: "The State parameter can only be: Active - Inactive"})
     state: string;
-
 
 }

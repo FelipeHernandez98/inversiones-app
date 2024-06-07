@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { CreateBusinessDto } from './dto/create-business.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
 import { Repository } from 'typeorm';
@@ -7,6 +7,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationDto } from 'src/common/pagination.dto';
 import { handleDBExceptions } from 'src/common/db-exception.util';
 import { formatString } from 'src/common/string-format.util';
+import { UserService } from 'src/user/user.service';
+import { CategoryService } from 'src/category/category.service';
 
 @Injectable()
 export class BusinessService {
@@ -15,11 +17,16 @@ export class BusinessService {
 
   constructor(
     @InjectRepository(Business)
-    private readonly businessService: Repository<Business>
+    private readonly businessService: Repository<Business>,
+    private readonly userService: UserService,
+    private readonly categoryService: CategoryService
   ){}
 
   async create(createBusinessDto: CreateBusinessDto) {
-    
+
+    await this.categoryService.findOne(createBusinessDto.idCategory);
+    await this.userService.findOne(createBusinessDto.idRepresentative);
+
     try {
       createBusinessDto.name = formatString(createBusinessDto.name)
       const business = await this.businessService.create(createBusinessDto);
