@@ -1,4 +1,4 @@
-import { IsDefined, IsEmail, IsNumber, IsOptional, IsPositive, IsString, Max, MaxLength } from "class-validator";
+import { IsDefined, IsEmail, IsNumber, IsOptional, IsPositive, IsString, Matches, Max, MaxLength, Min, MinLength } from "class-validator";
 
 export class CreateUserDto {
 
@@ -27,8 +27,12 @@ export class CreateUserDto {
     city: string;
 
     @IsString()
-    @MaxLength(20)
     @IsDefined()
+    @MinLength(8, { message: 'Password must be at least 8 characters long' })
+    @MaxLength(20, { message: 'Password must be at most 20 characters long' })
+    @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, { 
+    message: 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character' 
+    })
     password: string;
 
     @IsString()
@@ -38,17 +42,18 @@ export class CreateUserDto {
 
     @IsString()
     @MaxLength(30)
+    @MinLength(3)
     @IsOptional()
     linkedinUser: string;
 
     @IsString()
-    @MaxLength(10)
+    @MaxLength(15)
     @IsDefined()
     identificationNumber: string;
   
     @IsNumber()
     @IsPositive()
-    @Max(5)
+    @Max(4)
     idRole: number;
 
     @IsString()
