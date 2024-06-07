@@ -39,9 +39,9 @@ export class CategoryService {
     return category;
   }
 
-  async findOne(name: string) {
-    let category = await this.categoryService.findBy({ name });
-    if ( category.length == 0) throw new NotFoundException(`Category with name: ${name} does not exist`);
+  async findOne(id: number) {
+    let category = await this.categoryService.findBy({ id });
+    if ( category.length == 0) throw new NotFoundException(`Category with id: ${id} does not exist`);
     return category;
   }
 
@@ -57,9 +57,9 @@ export class CategoryService {
     return category;
   }
 
-  async remove(name: string) {
-    const category = await this.findOne(name);
+  async remove(id: number) {
+    const category = await this.findOne(id);
     await this.categoryService.remove(category);
-    return `Business with name: ${name} has been eliminated.`;
+    return `Business with id: ${id} has been eliminated.`;
   }
 }
